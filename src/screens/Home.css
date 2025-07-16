@@ -1,0 +1,69 @@
+.home {
+  padding: 20px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 30px auto;
+  justify-content: center;
+}
+
+.filter-btn {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.filter-btn:hover {
+  background-color: #e67e22;
+  color: white;
+}
+.filter-btn.active {
+  background-color: #e67e22;
+  color: white;
+}
+
+.chefs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.cta-section {
+  text-align: center;
+  background-color: #fef4ec;
+  padding: 50px 20px;
+  border-radius: 10px;
+  margin-top: 40px;
+}
+.cta-section h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+}
+.cta-section p {
+  margin: 15px 0;
+  font-size: 1.1rem;
+  color: #555;
+}
+.cta-btn {
+  background-color: #e67e22;
+  border: none;
+  padding: 12px 24px;
+  color: white;
+  font-weight: bold;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.cta-btn:hover {
+  background-color: #d35400;
+}

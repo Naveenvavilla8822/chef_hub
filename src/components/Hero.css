@@ -1,0 +1,18 @@
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+  background-color: #f9f77a;
+  margin-bottom: 30px;
+}
+.hero-text {
+  max-width: 50%;
+}
+.hero-img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
