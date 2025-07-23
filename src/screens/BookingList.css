@@ -1,0 +1,35 @@
+.booking-list-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.booking-list-container h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+.booking-list {
+  list-style: none;
+  padding: 0;
+}
+
+.booking-list li {
+  background: #ecfaff;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border-left: 5px solid #3498db;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.booking-list li em {
+  display: block;
+  margin-top: 8px;
+  font-style: italic;
+  color: #555;
+}

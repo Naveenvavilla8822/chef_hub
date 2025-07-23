@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Hero from '../components/Hero';
+import React, { useEffect, useState } from 'react';
+import './ChefList.css';
 import ChefCard from '../components/ChefCard';
-import './Home.css';
 
-function Home() {
+function ChefList() {
   const [chefs, setChefs] = useState([]);
   const [selectedCuisine, setSelectedCuisine] = useState('All');
-  const [loading, setLoading] = useState(true);
 
   const cuisines = ['All', 'Indian', 'Pakistani', 'Korean', 'Chinese', 'Mexican'];
 
@@ -17,32 +15,26 @@ function Home() {
         const data = await res.json();
         if (Array.isArray(data)) {
           setChefs(data);
-        } else {
-          console.error('Invalid response:', data);
         }
       } catch (err) {
-        console.error('Error fetching chefs:', err);
-      } finally {
-        setLoading(false);
+        console.error('Failed to load chefs:', err);
       }
     };
-
     fetchChefs();
   }, []);
 
   const filteredChefs = selectedCuisine === 'All'
     ? chefs
-    : chefs.filter(chef =>
+    : chefs.filter((chef) =>
         chef.specialty?.toLowerCase().includes(selectedCuisine.toLowerCase())
       );
 
   return (
-    <div className="home">
-      <Hero />
+    <div className="chef-list-page">
+      <h2>👨‍🍳 Available Chefs</h2>
 
-      {/* Cuisine Filter */}
       <div className="filters">
-        {cuisines.map(cuisine => (
+        {cuisines.map((cuisine) => (
           <button
             key={cuisine}
             className={`filter-btn ${selectedCuisine === cuisine ? 'active' : ''}`}
@@ -53,32 +45,22 @@ function Home() {
         ))}
       </div>
 
-      {/* Chef Cards */}
       <div className="chefs-container">
-        {loading ? (
-          <p>Loading chefs...</p>
-        ) : filteredChefs.length > 0 ? (
-          filteredChefs.map((chef, index) => (
+        {filteredChefs.length > 0 ? (
+          filteredChefs.map((chef) => (
             <ChefCard
-              key={index}
+              key={chef.chef_id}
               name={chef.name}
-              cuisine={chef.specialty || 'N/A'}
-              rating={chef.rating || '⭐️⭐️⭐️⭐️'}
+              cuisine={chef.specialty}
+              rating={chef.rating || 4.5}
             />
           ))
         ) : (
-          <p>No chefs found for selected cuisine.</p>
+          <p>No chefs found.</p>
         )}
-      </div>
-
-      {/* Call to Action */}
-      <div className="cta-section">
-        <h2>👩‍🍳 Ready to experience home-style meals?</h2>
-        <p>Join Chef Hub today and connect with chefs who cook what you love!</p>
-        <button className="cta-btn">Get Started</button>
       </div>
     </div>
   );
 }
 
-export default Home;
+export default ChefList;

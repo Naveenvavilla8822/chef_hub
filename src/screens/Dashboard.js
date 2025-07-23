@@ -1,24 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Dashboard.css';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
-  // Dummy user and dashboard stats
-  const [user, setUser] = useState({ name: "Naveen" });
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
-    bookings: 3,
-    favorites: 5,
-    orders: 12
+    bookings: 0,
+    favorites: 0,
+    orders: 0
   });
 
-  // Simulate data load
   useEffect(() => {
-    // Normally you'd fetch data from backend here
-    console.log("Loaded dashboard data for", user.name);
+    const fetchStats = async () => {
+      if (!user?.id) return;
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/dashboard/${user.id}`);
+        const data = await res.json();
+        if (res.ok) setStats(data);
+        else console.error('Error loading dashboard stats:', data.msg);
+      } catch (err) {
+        console.error('Server error:', err);
+      }
+    };
+
+    fetchStats();
   }, [user]);
 
   return (
     <div className="dashboard">
-      <h1>Welcome back, {user.name}! 👋</h1>
+      <h1>Welcome back, {user?.name || 'Guest'}! 👋</h1>
 
       <div className="dashboard-widgets">
         <div className="widget">
@@ -36,9 +49,9 @@ function Dashboard() {
       </div>
 
       <div className="dashboard-actions">
-        <button className="dashboard-btn">Book a Chef</button>
-        <button className="dashboard-btn">Browse Menus</button>
-        <button className="dashboard-btn">Edit Profile</button>
+        <button className="dashboard-btn" onClick={() => navigate('/book')}>Book a Chef</button>
+        <button className="dashboard-btn" onClick={() => navigate('/menus')}>Browse Menus</button>
+        <button className="dashboard-btn" onClick={() => navigate('/profile')}>Edit Profile</button>
       </div>
     </div>
   );

@@ -1,0 +1,40 @@
+.book-chef-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 40px;
+}
+
+.book-chef-container h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.book-chef-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.book-chef-container input,
+.book-chef-container textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.book-chef-container button {
+  background-color: #e67e22;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.booking-message {
+  margin-bottom: 15px;
+  color: #27ae60;
+  font-weight: bold;
+}

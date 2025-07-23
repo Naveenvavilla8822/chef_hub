@@ -1,0 +1,44 @@
+.chef-list-page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.chef-list-page h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.filter-btn {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.filter-btn:hover {
+  background-color: #e67e22;
+  color: white;
+}
+.filter-btn.active {
+  background-color: #e67e22;
+  color: white;
+}
+
+.chefs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}

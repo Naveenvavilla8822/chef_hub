@@ -95,3 +95,18 @@
     display: flex;
   }
 }
+.logout-btn {
+  background-color: #c0392b; /* red tone */
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-left: 10px;
+}
+
+.logout-btn:hover {
+  background-color: #e74c3c;
+}
