@@ -41,7 +41,14 @@ function Login() {
         setMessage('Login successful!');
         setUser(data.user);
         localStorage.setItem('user', JSON.stringify(data.user));
-        setTimeout(() => navigate('/dashboard'), 1500);
+
+        setTimeout(() => {
+          if (data.user.role === 'chef') {
+            navigate('/chef_dashboard');
+          } else {
+            navigate('/dashboard');
+          }
+        }, 1500);
       }
     } catch (err) {
       setMessage('Server error');

@@ -50,6 +50,7 @@ function ChefList() {
           filteredChefs.map((chef) => (
             <ChefCard
               key={chef.chef_id}
+              id={chef.chef_id}
               name={chef.name}
               cuisine={chef.specialty}
               rating={chef.rating || 4.5}
