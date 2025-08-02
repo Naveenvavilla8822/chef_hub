@@ -39,17 +39,37 @@ app.post('/api/register', [
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-  const { name, email, password, phone_number, address, role } = req.body;
+  const {
+    name,
+    email,
+    password,
+    phone_number,
+    address,
+    role,
+    cuisine_specialties,
+    certifications,
+    availability_schedule
+  } = req.body;
 
   try {
     const [existing] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
     if (existing.length > 0) return res.status(409).json({ msg: 'Email already exists' });
 
     const hashed = await bcrypt.hash(password, 10);
-    await db.query(
+
+    const [userResult] = await db.query(
       'INSERT INTO users (name, email, password, phone_number, address, role) VALUES (?, ?, ?, ?, ?, ?)',
       [name, email, hashed, phone_number, address, role]
     );
+
+    const user_id = userResult.insertId;
+
+    if (role === 'chef') {
+      await db.query(
+        'INSERT INTO chefs (user_id, cuisine_specialties, certifications, availability_schedule) VALUES (?, ?, ?, ?)',
+        [user_id, cuisine_specialties, certifications, availability_schedule]
+      );
+    }
 
     res.status(201).json({ msg: 'User registered successfully' });
   } catch (err) {
@@ -57,6 +77,7 @@ app.post('/api/register', [
     res.status(500).json({ msg: 'Server error' });
   }
 });
+
 
 // ✅ Login (no change here)
 app.post('/api/login', [

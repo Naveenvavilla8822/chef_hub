@@ -10,8 +10,12 @@ function Register() {
     password: '',
     phone_number: '',
     address: '',
-    role: 'customer'
+    role: 'customer',
+    cuisine_specialties: '',
+    certifications: '',
+    availability_schedule: ''
   });
+
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
 
@@ -46,11 +50,11 @@ function Register() {
       if (!res.ok) {
         setMessage(data.msg || 'Registration failed');
       } else {
-        setMessage('Account created successfully!');
+        setMessage('✅ Account created successfully!');
         setTimeout(() => navigate('/login'), 1500);
       }
     } catch (err) {
-      setMessage('Server error');
+      setMessage('❌ Server error');
     }
   };
 
@@ -78,8 +82,36 @@ function Register() {
           <select name="role" value={formData.role} onChange={handleChange}>
             <option value="customer">Customer</option>
             <option value="chef">Chef</option>
-            <option value="admin">Admin</option>
           </select>
+
+          {/* Extra fields for chef only */}
+          {formData.role === 'chef' && (
+            <>
+              <input
+                name="cuisine_specialties"
+                type="text"
+                placeholder="Cuisine Specialties (e.g. Indian, Italian)"
+                value={formData.cuisine_specialties}
+                onChange={handleChange}
+              />
+
+              <input
+                name="certifications"
+                type="text"
+                placeholder="Certifications (e.g. FSSAI Certified)"
+                value={formData.certifications}
+                onChange={handleChange}
+              />
+
+              <input
+                name="availability_schedule"
+                type="text"
+                placeholder="Availability Schedule (e.g. Mon–Fri 6–10pm)"
+                value={formData.availability_schedule}
+                onChange={handleChange}
+              />
+            </>
+          )}
 
           <button type="submit">Create Account</button>
         </form>
