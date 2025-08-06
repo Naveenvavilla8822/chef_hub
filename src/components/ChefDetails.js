@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+
 import './ChefCard.css';
 
 export default function ChefDetails() {
@@ -11,7 +13,7 @@ export default function ChefDetails() {
   const [bookingDate, setBookingDate] = useState('');
   const [instructions, setInstructions] = useState('');
   const [message, setMessage] = useState('');
-
+const { user } = useContext(AuthContext);
   useEffect(() => {
     const fetchChefAndMenu = async () => {
       try {
@@ -35,8 +37,8 @@ export default function ChefDetails() {
 
     try {
       await axios.post('http://localhost:5000/api/bookings', {
-        user_id: 1, // Replace with real logged-in user ID
-        chef_id: id,
+        user_id: user.id, 
+        chef_id: chef.user_id,
         booking_date: bookingDate,
         meal_instructions: instructions
       });

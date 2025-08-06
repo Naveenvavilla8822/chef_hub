@@ -191,7 +191,7 @@ app.get('/api/chefs/:id', async (req, res) => {
   const chefId = req.params.id;
   try {
     const [results] = await db.query(
-      `SELECT chefs.chef_id, users.name, users.address AS location, 
+      `SELECT chefs.chef_id,chefs.user_id, users.name, users.address AS location, 
               chefs.cuisine_specialties AS specialty, chefs.experience_years
        FROM chefs 
        INNER JOIN users ON chefs.user_id = users.user_id
@@ -328,20 +328,23 @@ app.put('/api/chef/bookings/:bookingId/status', async (req, res) => {
 
 // Add a new menu item
 app.post('/api/menu/add', upload.single('image'), async (req, res) => {
-  const { chef_id, name, description, price, available } = req.body;
+  const { chef_id, name, description, price, available, category } = req.body;
   const image = req.file?.filename;
 
   try {
     await db.query(
-      'INSERT INTO chef_menu (chef_id, name, description, price, image, available) VALUES (?, ?, ?, ?, ?, ?)',
-      [chef_id, name, description, price, image, available === 'true']
+      'INSERT INTO chef_menu (chef_id, name, description, price, image, available, category) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [chef_id, name, description, price, image, available === 'true', category]
     );
+
     res.status(201).json({ msg: 'Menu item added' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Failed to add menu item' });
   }
 });
+
+
 
 
 // Delete menu item
@@ -440,6 +443,25 @@ app.get('/api/menus', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Failed to load menu items' });
+  }
+});
+
+app.post('/api/contact', async (req, res) => {
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ msg: 'All fields are required' });
+  }
+
+  try {
+    await db.query(
+      'INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)',
+      [name, email, message]
+    );
+    res.status(201).json({ msg: 'Message sent successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Failed to send message' });
   }
 });
 
